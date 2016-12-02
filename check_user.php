@@ -13,12 +13,12 @@ while($row=mysql_fetch_object($exec_query)){
 //	echo $row->id;
 	$user_id[]=$row->id;
 }
-if (($key = array_search($current_user_id, $user_id)) !== false) {
-    unset($user_id[$key]);
-}
+// if (($key = array_search($current_user_id, $user_id)) !== false) {
+//     unset($user_id[$key]);
+// }
 foreach($user_id as $usr_id){
-            $session_query="SELECT  online_users.user_id ,users.first_name FROM users,online_users 
-                            where online_users.user_id=$usr_id";
+            $session_query="SELECT  online_users.sessionid,online_users.user_id ,users.first_name FROM users,online_users 
+                            where online_users.user_id=$usr_id and users.active=1";
             var_dump($session_query);
 
             $session_query_exec=mysql_query($session_query);

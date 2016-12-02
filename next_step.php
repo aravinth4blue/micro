@@ -74,8 +74,8 @@ if(isset($_POST['submit_btn'])){
 <div class="form-group">
  		<label for="reln_status">Relationship status</label>
  		<select name="reln_status" class="form-control" id="reln_status">
- 			<option value="0">Single</option>
-  			<option value="1">Married</option>
+ 			<option value="0" <?php if(isset($_SESSION['reln_status'])===0){ echo 'selected';} ?> >Single</option>
+  			<option value="1" <?php if(isset($_SESSION['reln_status'])===1){ echo 'selected';} ?> >Married</option>
  		</select>
 </div>
 <div class="form-group">

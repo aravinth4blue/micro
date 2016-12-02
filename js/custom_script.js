@@ -36,7 +36,7 @@ $( document ).ready(function() {
 		$("#user_pass").focus();
 		return false;
 	}else{
-		alert("Form submitted sucessfully");
+		$("#register").submit();
 		return true;
 	}
 });

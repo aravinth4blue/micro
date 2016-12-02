@@ -1,7 +1,8 @@
 <?php
 require("header.php");
 require("db.php");
-
+// $data = json_decode(file_get_contents('php://input'), true);
+// print_r($data);
 $user_id=$_SESSION['user_id'];
 
 $select_qry="select active from users where id='$user_id'";
