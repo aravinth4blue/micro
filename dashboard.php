@@ -1,9 +1,15 @@
 <?php
 require("header.php");
 require("db.php");
-session_start();
+
 $user_id=$_SESSION['user_id'];
 
+$select_qry="select active from users where id='$user_id'";
+
+$select_exec_query=mysql_query($select_qry);
+$result=mysql_fetch_object($select_exec_query);
+
+if($result->active==1){
 ?>
 <div class="col-md-4 col-md-offset-4 ">
 <form method="post" class="form-horizontal" action="dashboard.php">
@@ -62,82 +68,11 @@ $user_id=$_SESSION['user_id'];
 </div>
 
 <?php
-require("footer.php");
-?>
-<script>
-$("#name").change(function(){
-	if($(this).is(':checked')){
-		$( "#dob" ).prop( "disabled", true );
-		$( "#hobby" ).prop( "disabled", true );
-		$("#search").change(function(){
-			$.ajax({ 
-				url: 'searchbyname.php',
-		        type: 'post',
-		        data:{
-		        	search:$("#search").val()
-		    	},
-		        dataType : 'html',
-		        success: function(data) {
-		                      $("#result").html(data);
-		                  }
-				});
-			});
-	}
-	else{
-		$( "#dob" ).prop( "disabled", false );
-		$( "#hobby" ).prop( "disabled", false );
-		$('#search').val("");
-	}
-});
-$('#dob').change(function(){
-if($(this).is(':checked')){
-	//$("#search").datepicker();
-	$( "#name" ).prop( "disabled", true );
-	$( "#hobby" ).prop( "disabled", true );
-			$("#search").datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(e){
-			$.ajax({ 
-				url: 'searchbydob.php',
-		        type: 'post',
-		        data:{
-		        	search:$("#search").val()
-		    	},
-		        dataType : 'html',
-		        success: function(data) {
-		                      $("#result").html(data);
-		                  }
-				});
-			});
-}else{
-	$("#search").datepicker("destroy");
-	$( "#name" ).prop( "disabled", false );
-	$( "#hobby" ).prop( "disabled", false );
-	$('#search').val("");
+}
+else{
+	
+	echo "Please login to view this page <a href='login.php'>Click here to login</a>";
 
 }
-});
-$("#hobby").change(function(){
-	if($(this).is(':checked')){
-		$( "#name" ).prop( "disabled", true );
-		$( "#dob" ).prop( "disabled", true );
-		$('#search').tagsinput('refresh');
-			$("#search").change(function(){
-			$.ajax({ 
-				url: 'searchbyhobby.php',
-		        type: 'post',
-		        data:{
-		        	search:$("#search").val()
-		    	},
-		        dataType : 'html',
-		        success: function(data) {
-		                      $("#result").html(data);
-		                  }
-				});
-			});
-	}else{
-		$('#search').tagsinput('destroy');
-		$( "#name" ).prop( "disabled", false );
-		$( "#dob" ).prop( "disabled", false );
-		$('#search').val("");
-	}
-});
-</script>
+require("footer.php");
+?>

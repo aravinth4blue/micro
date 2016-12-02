@@ -1,0 +1,8 @@
+Form validation in php/JS
+To find whether other user is online
+To store the updated profile details in php
+Store password with bcrypt
+
+Need to be done
+
+User's  online notification

@@ -46,6 +46,11 @@ if(isset($_SESSION['user_email'])){
 		<input type="password" id="user_pass" class="form-control" name="user_pass" value="" required>
 </div>
 <div class="form-group">
+		<label for="user_pass">Confirm Password</label>
+		<input type="password" id="confirm_pass" class="form-control" name="confirm_pass" value="" required>
+</div>
+
+<div class="form-group">
 		<input type="submit" name="submit_btn" class="btn btn-default" value="Register">
 </div>
 </form>
@@ -62,6 +67,7 @@ $( document ).ready(function() {
     last_name=$("#last_name").val();
     user_email=$("#user_email").val();
     user_pass=$("#user_pass").val();
+    confirm_pass=$("#confirm_pass").val();
     
 
 

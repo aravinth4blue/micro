@@ -3,7 +3,7 @@ require("db.php");
 //Get all user id from 
 
 session_start();
-$select_qry="select id from users";
+$select_qry="select id from users where active =1";
 if(isset($_SESSION['user_id'])){
 	$current_user_id=$_SESSION['user_id'];
 }

@@ -7,7 +7,8 @@ if(isset($_POST['login_btn'])){
 			
 
 		$select_qry ="select * from users where user_email='$user_email' and user_pass='$user_pass'";
-		
+		$update_qry="update users SET active=1 where user_email='$user_email'";
+		$exec_update_qry=mysql_query($update_qry);
 		$exec_query=mysql_query($select_qry);
 		if(!$exec_query) {
     		die("Database query failed: " . mysql_error());
@@ -23,6 +24,11 @@ if(isset($_POST['login_btn'])){
 			$_SESSION['user_email']=$row->user_email;
 			$_SESSION['first_name']=$row->first_name;
 			$_SESSION['user_id']=$row->id;
+			$_SESSION['profile_pic']=$row->profile_pic;
+			$_SESSION['short_bio']=$row->short_bio;
+			$_SESSION['date_of_birth']=$row->date_of_birth;
+			$_SESSION['hobby']=$row->hobby;
+			$_SESSION['reln_status']=$row->reln_status;
 			$_SESSION['session_id']=session_id();
 			$user_id=$row->id;
 			$session_id= session_id();

@@ -1,8 +1,9 @@
 <?php
 require("header.php");
 require("db.php");
-session_start();
+var_dump($_SESSION);
 $current_user_id=$_SESSION['user_id'];
+
 if(isset($_POST['submit_btn'])){
 	if(isset($_FILES['user_pic'])){
       $errors= array();
@@ -11,7 +12,7 @@ if(isset($_POST['submit_btn'])){
       $file_tmp =$_FILES['user_pic']['tmp_name'];
       $file_type=$_FILES['user_pic']['type'];
       $file_ext=strtolower(end(explode('.',$_FILES['user_pic']['name'])));
-      
+
       $expensions= array("jpeg","jpg","png");
       
       if(in_array($file_ext,$expensions)=== false){
@@ -23,13 +24,17 @@ if(isset($_POST['submit_btn'])){
       }
       
       if(empty($errors)==true){
+         $target_path="images/";
       	 $file_perm="images/".$file_name;
-         move_uploaded_file($file_tmp,$file_perm);
+
+         $move_file=move_uploaded_file($file_tmp,$file_perm);
          //echo "Success";
       }else{
-         print_r($errors);
+         echo 'File upload failed';
+       //  print_r($errors);
       }
    }
+   if($move_file){
     $user_pic=$file_perm;
 	$short_bio=$_POST['short_bio'];
 	$date_of_birth=$_POST['date_of_birth'];
@@ -42,6 +47,12 @@ if(isset($_POST['submit_btn'])){
 	
 	$exec_query=mysql_query($update_qry);
 	header('Location: dashboard.php');
+   }
+   else{
+      echo 'Error in file uploading';
+      print_r($errors);
+
+   }
 }
 ?>
 <div class="row">
@@ -49,16 +60,16 @@ if(isset($_POST['submit_btn'])){
 <form method="post" class="form-horizontal" action="next_step.php" enctype='multipart/form-data'>
 <div class="form-group">
  		<label for="user_pic">Profile picture</label>
- 		<input type="file" id="user_pic" class="form-control" name="user_pic" value="" required>
+ 		<input type="file" id="user_pic" class="form-control" name="user_pic" value="<?php if(isset($_SESSION['profile_pic'])){ echo $_SESSION['profile_pic'];} ?>" required>
 </div>
 
 <div class="form-group">
  		<label for="short_bio">Bio</label>
- 		<input type="text" id="short_bio" class="form-control" name="short_bio" value="" required>
+ 		<input type="text" id="short_bio" class="form-control" name="short_bio" value="<?php if(isset($_SESSION['short_bio'])){ echo $_SESSION['short_bio'];} ?>" required>
 </div>
 <div class="form-group">
  		<label for="date_of_birth">DOB</label>
- 		<input type="text" id="date_of_birth" class="form-control" name="date_of_birth" value="" required>
+ 		<input type="text" id="date_of_birth" class="form-control" name="date_of_birth" value="<?php if(isset($_SESSION['date_of_birth'])){ echo $_SESSION['date_of_birth'];} ?>" required>
 </div>
 <div class="form-group">
  		<label for="reln_status">Relationship status</label>
@@ -69,7 +80,7 @@ if(isset($_POST['submit_btn'])){
 </div>
 <div class="form-group">
  		<label for="hobby">Hobby</label>
- 		<input type="text" id="hobby" class="form-control" name="hobby" value="" data-role="tagsinput" required>
+ 		<input type="text" id="hobby" class="form-control" name="hobby" value="<?php if(isset($_SESSION['hobby'])){ echo $_SESSION['hobby'];} ?>" data-role="tagsinput" required>
 </div>
 <div class="form-group">
 		<input type="submit" name="submit_btn" class="btn btn-default" value="Update">

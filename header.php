@@ -7,7 +7,11 @@
 <!--<link rel="stylesheet"  href="css/bootstrap-tagsinput.css"></style>-->
 
 </head>
-<?php session_start(); //print_r($_SESSION); ?>
+<?php   
+      error_reporting(-1);
+      ini_set('display_errors', 'On');
+      session_start(); //print_r($_SESSION); 
+      ?>
 <div class="container">
 
         <div class="container-fluid">
