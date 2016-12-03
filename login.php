@@ -3,18 +3,18 @@ require("header.php");
 require("db.php");
 if(isset($_POST['login_btn'])){
 			$user_email=$_POST['user_email'];
-			$user_pass=$_POST['user_pass'];
+			$user_pass=md5($_POST['user_pass']);
 			
 
 		$select_qry ="select * from users where user_email='$user_email' and user_pass='$user_pass'";
 		$update_qry="update users SET active=1 where user_email='$user_email'";
-		$exec_update_qry=mysql_query($update_qry);
-		$exec_query=mysql_query($select_qry);
+		$exec_update_qry=mysqli_query($link,$update_qry);
+		$exec_query=mysqli_query($link,$select_qry);
 		if(!$exec_query) {
     		die("Database query failed: " . mysql_error());
 		}
-		$row=mysql_fetch_object($exec_query);
-		$num_rows=mysql_num_rows($exec_query);
+		$row=mysqli_fetch_object($exec_query);
+		$num_rows=mysqli_num_rows($exec_query);
 		
 		
 		if($num_rows>0){
@@ -38,7 +38,7 @@ if(isset($_POST['login_btn'])){
 				VALUES ('$session_id', '$user_id')";
 
 
-		$exec_query=mysql_query($session_qry);
+		$exec_query=mysqli_query($session_qry);
 		header('Location: next_step.php');
 		}
 		

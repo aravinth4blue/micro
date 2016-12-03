@@ -1,14 +1,22 @@
 <?php
 require("header.php");
 require("db.php");
+class Result{
+	public $active;
+}
 // $data = json_decode(file_get_contents('php://input'), true);
 // print_r($data);
-$user_id=$_SESSION['user_id'];
+if(isset($_SESSION['user_id'])){
+	$user_id=$_SESSION['user_id'];
+	$select_qry="select active from users where id='$user_id'";
+	$select_exec_query=mysqli_query($link,$select_qry);
+	$result=mysqli_fetch_object($select_exec_query);
+}else{
+	$result=new Result();
+	$result->active==0;
+}
 
-$select_qry="select active from users where id='$user_id'";
 
-$select_exec_query=mysql_query($select_qry);
-$result=mysql_fetch_object($select_exec_query);
 
 if($result->active==1){
 ?>
@@ -55,11 +63,11 @@ if($result->active==1){
    <div class = "panel-body">
    		<ul>
 			<?php    
-			$online_query="SELECT  online_users.user_id ,users.first_name FROM users,online_users where online_users.user_id=users.id";
+			$online_query="SELECT  first_name FROM users where active=1";
 			            
-			            $exec_query=mysql_query($online_query);
+			            $exec_query=mysqli_query($link,$online_query);
 
-			            while($row=mysql_fetch_object($exec_query)){
+			            while($row=mysqli_fetch_object($exec_query)){
 			            	echo '<li>'.$row->first_name.'</li>';
 			            }
 			?>

@@ -1,7 +1,7 @@
 <?php
 require("header.php");
 require("db.php");
-var_dump($_SESSION);
+
 $current_user_id=$_SESSION['user_id'];
 
 if(isset($_POST['submit_btn'])){
@@ -45,7 +45,7 @@ if(isset($_POST['submit_btn'])){
 				SET profile_pic='$user_pic',short_bio = '$short_bio', date_of_birth = '$date_of_birth',reln_status='$reln_status',hobby='$hobby'
 				WHERE id=$current_user_id ";
 	
-	$exec_query=mysql_query($update_qry);
+	$exec_query=mysqli_query($update_qry);
 	header('Location: dashboard.php');
    }
    else{

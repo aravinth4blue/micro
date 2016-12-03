@@ -2,19 +2,20 @@
 require("header.php");
 require("db.php");
 
-if(isset($_POST['submit_btn'])){
-		$first_name=mysql_real_escape_string($_POST['first_name']);
-		$last_name=mysql_real_escape_string($_POST['last_name']);
-		$user_email=mysql_real_escape_string($_POST['user_email']);
-		$user_pass=mysql_real_escape_string($_POST['user_pass']);
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$first_name=mysqli_real_escape_string($link,$_POST['first_name']);
+		$last_name=mysqli_real_escape_string($link,$_POST['last_name']);
+		$user_email=mysqli_real_escape_string($link,$_POST['user_email']);
+		$user_pass=mysqli_real_escape_string($link,md5($_POST['user_pass']));
 
 		$insert_qry = "INSERT INTO users (first_name, last_name, user_email,user_pass) 
 				VALUES ('$first_name', '$last_name', '$user_email', '$user_pass')";
-		
 
-		$exec_query=mysql_query($insert_qry);
+
+		$exec_query=mysqli_query($link,$insert_qry);
 		
-echo '<div class="alert alert-success" role="alert">User registered sucessfully</div>';
+		echo '<div class="alert alert-success" role="alert">User registered sucessfully</div>';
 
 	}
 

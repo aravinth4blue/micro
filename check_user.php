@@ -7,9 +7,9 @@ $select_qry="select id from users where active =1";
 if(isset($_SESSION['user_id'])){
 	$current_user_id=$_SESSION['user_id'];
 }
-$exec_query=mysql_query($select_qry);
+$exec_query=mysqli_query($select_qry);
 
-while($row=mysql_fetch_object($exec_query)){
+while($row=mysqli_fetch_object($exec_query)){
 //	echo $row->id;
 	$user_id[]=$row->id;
 }
