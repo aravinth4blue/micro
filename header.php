@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav navbar-right">
              
               <?php  if(isset($_SESSION['user_email'])){?>
-              <li><a href="#" id="over" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><span class="glyphicon glyphicon-bell" id="logIcon"></span></a></li>
+              <li><a href="#" id="over" data-toggle="popover" title="Online user" ><span class="glyphicon glyphicon-bell" id="logIcon"></span></a></li>
               
                <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href=""><?php echo $_SESSION['first_name'] ?> <b class="caret"></b></a>

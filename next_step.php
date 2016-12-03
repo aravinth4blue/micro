@@ -1,9 +1,12 @@
 <?php
 require("header.php");
 require("db.php");
-
-$current_user_id=$_SESSION['user_id'];
-
+if(isset($_SESSION['user_id'])){
+   $current_user_id=$_SESSION['user_id'];
+}
+$edit_profile_qry ="select * from users where id=$current_user_id";
+$exec_query=mysqli_query($link,$edit_profile_qry);
+$row=mysqli_fetch_array($exec_query);
 if(isset($_POST['submit_btn'])){
 	if(isset($_FILES['user_pic'])){
       $errors= array();
@@ -40,12 +43,13 @@ if(isset($_POST['submit_btn'])){
 	$date_of_birth=$_POST['date_of_birth'];
 	$reln_status=$_POST['reln_status'];
 	$hobby=$_POST['hobby'];
+   $gender=$_POST['gender'];
 
 	$update_qry="UPDATE users
-				SET profile_pic='$user_pic',short_bio = '$short_bio', date_of_birth = '$date_of_birth',reln_status='$reln_status',hobby='$hobby'
+				SET profile_pic='$user_pic',short_bio = '$short_bio', date_of_birth = '$date_of_birth',reln_status='$reln_status',hobby='$hobby',gender='$gender'
 				WHERE id=$current_user_id ";
 	
-	$exec_query=mysqli_query($update_qry);
+	$exec_query=mysqli_query($link,$update_qry);
 	header('Location: dashboard.php');
    }
    else{
@@ -60,27 +64,35 @@ if(isset($_POST['submit_btn'])){
 <form method="post" class="form-horizontal" action="next_step.php" enctype='multipart/form-data'>
 <div class="form-group">
  		<label for="user_pic">Profile picture</label>
- 		<input type="file" id="user_pic" class="form-control" name="user_pic" value="<?php if(isset($_SESSION['profile_pic'])){ echo $_SESSION['profile_pic'];} ?>" required>
+ 		<input type="file" id="user_pic" class="form-control" name="user_pic" value="<?php if(isset($row['profile_pic'])){ echo $row['profile_pic'];} ?>" required>
 </div>
 
 <div class="form-group">
  		<label for="short_bio">Bio</label>
- 		<input type="text" id="short_bio" class="form-control" name="short_bio" value="<?php if(isset($_SESSION['short_bio'])){ echo $_SESSION['short_bio'];} ?>" required>
+ 		<input type="text" id="short_bio" class="form-control" name="short_bio" value="<?php if(isset($row['short_bio'])){ echo $row['short_bio'];} ?>" required>
 </div>
 <div class="form-group">
  		<label for="date_of_birth">DOB</label>
- 		<input type="text" id="date_of_birth" class="form-control" name="date_of_birth" value="<?php if(isset($_SESSION['date_of_birth'])){ echo $_SESSION['date_of_birth'];} ?>" required>
+ 		<input type="text" id="date_of_birth" class="form-control" name="date_of_birth" value="<?php if(isset($row['date_of_birth'])){ echo $row['date_of_birth'];} ?>" required>
 </div>
 <div class="form-group">
  		<label for="reln_status">Relationship status</label>
  		<select name="reln_status" class="form-control" id="reln_status">
- 			<option value="0" <?php if(isset($_SESSION['reln_status'])===0){ echo 'selected';} ?> >Single</option>
-  			<option value="1" <?php if(isset($_SESSION['reln_status'])===1){ echo 'selected';} ?> >Married</option>
+ 			<option value="0" <?php if(isset($row['reln_status'])==0){ echo 'selected';} ?> >Single</option>
+  			<option value="1" <?php if(isset($row['reln_status'])==1){ echo 'selected';} ?> >Married</option>
  		</select>
 </div>
 <div class="form-group">
  		<label for="hobby">Hobby</label>
- 		<input type="text" id="hobby" class="form-control" name="hobby" value="<?php if(isset($_SESSION['hobby'])){ echo $_SESSION['hobby'];} ?>" data-role="tagsinput" required>
+ 		<input type="text" id="hobby" class="form-control" name="hobby" value="<?php if(isset($_SESSION['hobby'])){ echo $row['hobby'];} ?>" data-role="tagsinput" required>
+</div>
+<div class="form-group">
+      <label for="gender">Gender</label>
+      <select name="gender" class="form-control" id="gender">
+         <option value="0" <?php if(isset($row['gender'])==0){ echo 'selected';} ?> >Male</option>
+         <option value="1" <?php if(isset($row['gender'])==1){ echo 'selected';} ?> >Female</option>
+      </select>
+</div>
 </div>
 <div class="form-group">
 		<input type="submit" name="submit_btn" class="btn btn-default" value="Update">

@@ -136,8 +136,16 @@ $.ajax({
         
         if(data.status="Online"){
         
-        	$("#logIcon").html( data.name+' is online');
-        $('#over').popover();
+        	//$("#logIcon").html( data.name+' is online');
+        	$('#over').popover({
+        		trigger: 'manual',
+        		placement: 'bottom',
+        		content:function() {
+           			var message = data.name+' is online';
+             	return message;
+        }
+        });
+        $('#over').popover('show');
         } 
     }
 });
