@@ -63,7 +63,7 @@ if($result->active==1){
    <div class = "panel-body">
    		<ul>
 			<?php    
-			$online_query="SELECT  first_name FROM users where active=1";
+			$online_query="SELECT  first_name FROM users where active='1'";
 			            
 			            $exec_query=mysqli_query($link,$online_query);
 

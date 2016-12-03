@@ -1,7 +1,7 @@
 <?php
 require("header.php");
 require("db.php");
-if(isset($_POST['login_btn'])){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$user_email=$_POST['user_email'];
 			$user_pass=md5($_POST['user_pass']);
 			
@@ -38,7 +38,7 @@ if(isset($_POST['login_btn'])){
 				VALUES ('$session_id', '$user_id')";
 
 
-		$exec_query=mysqli_query($session_qry);
+		$exec_query=mysqli_query($link,$session_qry);
 		header('Location: next_step.php');
 		}
 		

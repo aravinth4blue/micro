@@ -136,7 +136,7 @@ $.ajax({
         
         if(data.status="Online"){
         
-        	$("#logIcon").html( data.first_name+' is online');
+        	$("#logIcon").html( data.name+' is online');
         $('#over').popover();
         } 
     }
